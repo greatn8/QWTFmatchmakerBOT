@@ -39,7 +39,7 @@ client.on('message', message => {
   }
   if (message.content === `!moist`) {
   	const attachment = new Attachment('https://i.pinimg.com/originals/3f/06/b8/3f06b853310b12fea0a3143e04fc639f.jpg');
-  	message.channel.send(message.author + ' I want you to know that..');
+  	message.channel.send(guild.member(message.author).nickname + ' I want you to know that..');
   	message.channel.send(attachment);
   	return;
   }
@@ -83,7 +83,7 @@ client.on('message', message => {
   //!leave
   if(message.content === `${prefix}leave`) {
 
-    let joinee = message.author.username;
+    let joinee = guild.member(message.author).nickname;
 	var index = playing.indexOf(joinee);
 	console.log('index:' + index)
 	if (index > -1) {
@@ -133,7 +133,7 @@ client.on('message', message => {
   } 
   //!join
   if(message.content === `${prefix}join`) {
-    let joinee = message.author.username;
+    let joinee = guild.member(message.author).nickname;
     if (playing.includes(joinee)) {
     	message.channel.send('You have already joined fool!😛' );
     	return;
@@ -177,7 +177,7 @@ client.on('message', message => {
 	console.log(createdstartpug);	
 	let humandate = new Date (createdstartpug);
 	console.log(humandate);
-    let joinee = message.author.username;
+    let joinee = guild.member(message.author).nickname;
     difference = 'test'
     if (playing.includes(joinee)) {
     	message.channel.send('You are already in a match fool!');
