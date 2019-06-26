@@ -20,7 +20,7 @@ client.on('message', message => {
   }
   if (message.content === '!endpug') {
   	if (playing.length === 0) {
-  		message.channel.send(message.author.username + ", there is nothing to end!🤡 ");
+  		message.channel.send(guild.member(message.author).nickname + ", there is nothing to end!🤡 ");
   		return;
   	} else {
   playing = [];
@@ -45,7 +45,7 @@ client.on('message', message => {
   }
     if(message.content === `${prefix}pugstatus`) {
 	if (playing.length === 0) {
-		message.channel.send(message.author.username + ", there is no match☹, type !startpug if you would like to start a match.");
+		message.channel.send(guild.member(message.author).nickname + ", there is no match☹, type !startpug if you would like to start a match.");
 	} else {
 		console.log(playing);
 	    currentnumber = playing.length;
@@ -89,7 +89,7 @@ client.on('message', message => {
 	if (index > -1) {
 	  playing.splice(index, 1);
 	} else {
-		message.channel.send(message.author.username + ' ,you are not in a match and cannot leave something you have not joined. 😂');
+		message.channel.send(guild.member(message.author).nickname + ' ,you are not in a match and cannot leave something you have not joined. 😂');
 		return;
 	}
 	console.log(playing);
@@ -219,7 +219,7 @@ client.on('message', message => {
 
 	    if(message.content === `${prefix}pug`) {
 	if (playing.length === 0) {
-		message.channel.send(message.author.username + ", there is no match☹, type !startpug if you would like to start a match.");
+		message.channel.send(guild.member(message.author).nickname + ", there is no match☹, type !startpug if you would like to start a match.");
 	} else {
 		console.log(playing);
 	    currentnumber = playing.length;
