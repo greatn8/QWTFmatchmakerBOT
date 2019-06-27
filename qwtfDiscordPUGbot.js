@@ -116,7 +116,7 @@ client.on('message', message => {
 			if ((currentnumber >= 1) && (teams === true)) {
 				playerlist.addField('Team Blue', teamblue,true);
 				}
-			if ((currentnumber >= 8) && (teams === true)){
+			if ((currentnumber >= maxplayers) && (teams === true)){
 				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
 				playerlist.addField(currentnumber + '/' + maxplayers + ' players have joined', 'TIME TO START MATCH!! GET IN SERVER!!');
 				}						
@@ -163,7 +163,7 @@ client.on('message', message => {
 			if ((currentnumber >= 1) && (teams === true)) {
 				playerlist.addField('Team Blue', teamblue,true);
 				}
-			if ((currentnumber >= 8) && (teams === true)){
+			if ((currentnumber >= maxplayers) && (teams === true)){
 				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
 				playerlist.addField(currentnumber + '/' + maxplayers + ' players have joined', 'TIME TO START MATCH!! GET IN SERVER!!');
 				}						
@@ -202,7 +202,7 @@ client.on('message', message => {
 			if ((currentnumber >= 1) && (teams === true)) {
 				playerlist.addField('Team Blue', teamblue,true);
 				}
-			if ((currentnumber >= 8) && (teams === true)){
+			if ((currentnumber >= maxplayers) && (teams === true)){
 				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
 				playerlist.addField(currentnumber + '/' + maxplayers + ' players have joined', 'TIME TO START MATCH!! GET IN SERVER!!');
 				}						
@@ -245,7 +245,7 @@ client.on('message', message => {
 			if ((currentnumber >= 1) && (teams === true)) {
 				playerlist.addField('Team Blue', teamblue,true);
 				}
-			if ((currentnumber >= 8) && (teams === true)){
+			if ((currentnumber >= maxplayers) && (teams === true)){
 				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
 				playerlist.addField(currentnumber + '/' + maxplayers + ' players have joined', 'TIME TO START MATCH!! GET IN SERVER!!');
 				}						
@@ -279,7 +279,7 @@ client.on('message', message => {
 			if ((currentnumber >= 1) && (teams === true)) {
 				playerlist.addField('Team Blue', teamblue,true);
 				}
-			if ((currentnumber >= 8) && (teams === true)){
+			if ((currentnumber >= maxplayers) && (teams === true)){
 				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
 				playerlist.addField(currentnumber + '/' + maxplayers + ' players have joined', 'TIME TO START MATCH!! GET IN SERVER!!');
 				}						
