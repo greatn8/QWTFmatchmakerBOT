@@ -12,7 +12,7 @@ client.on('ready', () => {
 
 client.on('message', message => {
   if(!message.content.startsWith(prefix)) return;
-  avacommands = ['!startpug:START a game','!join: JOIN current match','!leave: LEAVE current match','!endpug: END/CLEAR existing match','!pugstatus: Check match STATUS' ,'!teamsizeX where X is(1-8): change TEAMSIZE, default is 4 (coming soon)','!teams: toggles the display of TEAMS', '!settime: add a text field that displays a scheduled TIME for the match. (coming soon)','!players: see a list current PLAYERS (comming soon)']
+  avacommands = ['!startpug:START a game','!join: JOIN current match','!leave: LEAVE current match','!endpug: END/CLEAR existing match','!pugstatus: Check match STATUS' ,'!teamsizeX where X is(1-8): change TEAMSIZE, default is 4','!teams: toggles the display of TEAMS', '!settime: add a text field that displays a scheduled TIME for the match. (coming soon)','!players: see a list of current PLAYERS (coming soon)']
   if (message.content === '!pughelp') {
 	    let commandlist = new Discord.RichEmbed()	
 			.addField('QWTF Matchbot Available Commands',avacommands, true)
@@ -161,7 +161,7 @@ client.on('message', message => {
 			//	playerlist.setFooter('We need ' + (maxplayers - currentnumber) +' more player!', 'http://gph.is/1Eh63HI')		
 			//}
 			if ((currentnumber >= 1) && (teams === true)) {
-				playerlist.addField('Team Blue', teamblue,true);
+				playerlist.addField('Team Blue', teamred,true);
 				}
 			if ((currentnumber >= maxplayers) && (teams === true)){
 				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
@@ -200,7 +200,7 @@ client.on('message', message => {
 			//	playerlist.setFooter('We need ' + (maxplayers - currentnumber) +' more player!', 'http://gph.is/1Eh63HI')		
 			//}
 			if ((currentnumber >= 1) && (teams === true)) {
-				playerlist.addField('Team Blue', teamblue,true);
+				playerlist.addField('Team Blue', teamred,true);
 				}
 			if ((currentnumber >= maxplayers) && (teams === true)){
 				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
@@ -243,7 +243,7 @@ client.on('message', message => {
 			//	playerlist.setFooter('We need ' + (maxplayers - currentnumber) +' more player!', 'http://gph.is/1Eh63HI')		
 			//}
 			if ((currentnumber >= 1) && (teams === true)) {
-				playerlist.addField('Team Blue', teamblue,true);
+				playerlist.addField('Team Blue', teamred,true);
 				}
 			if ((currentnumber >= maxplayers) && (teams === true)){
 				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
@@ -277,7 +277,7 @@ client.on('message', message => {
 			//	playerlist.setFooter('We need ' + (maxplayers - currentnumber) +' more player!', 'http://gph.is/1Eh63HI')		
 			//}
 			if ((currentnumber >= 1) && (teams === true)) {
-				playerlist.addField('Team Blue', teamblue,true);
+				playerlist.addField('Team Blue', teamred,true);
 				}
 			if ((currentnumber >= maxplayers) && (teams === true)){
 				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
@@ -291,4 +291,4 @@ client.on('message', message => {
   } 
 	});
 // Login add your token here
-client.login('');
+client.login('NTkwNzg2NjA2MDk3NzYwMjg5.XRSSbQ.OHhRdSKIsOyv2HXqn0eRjp8tyIE');
