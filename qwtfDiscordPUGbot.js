@@ -5,6 +5,8 @@ const prefix = "!"
 let maxplayers = 8
 let playing = []
 let teams = false
+let matchdescript = ""
+
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
@@ -12,13 +14,21 @@ client.on('ready', () => {
 
 client.on('message', message => {
   if(!message.content.startsWith(prefix)) return;
-  avacommands = ['!startpug:START a game','!join: JOIN current match','!leave: LEAVE current match','!endpug: END/CLEAR existing match','!pugstatus: Check match STATUS' ,'!teamsizeX where X is(1-8): change TEAMSIZE, default is 4','!teams: toggles the display of TEAMS', '!settime: add a text field that displays a scheduled TIME for the match. (coming soon)','!players: see a list of current PLAYERS (coming soon)']
+  avacommands = ['!startpug: START a game','!join: JOIN current match','!leave: LEAVE current match','!endpug: END/CLEAR existing match','!pugstatus: Check match STATUS' ,'!teamsizeX where X is(1-8): change TEAMSIZE, default is 4','!teams: toggles the display of TEAMS', '!setmsg: add a text field that displays any message i.e time of match.']
   if (message.content === '!pughelp') {
 	    let commandlist = new Discord.RichEmbed()	
 			.addField('QWTF Matchbot Available Commands',avacommands, true)
 		message.channel.sendEmbed(commandlist)		
   return;
   }
+
+  if (message.content.startsWith ('!setmsg')) {
+  		matchdescript = message.content.slice(7);
+  		console.log(matchdescript);
+  		console.log(message.member.displayname);
+  		return;
+  }
+
   if (message.content === '!endpug') {
   	if (playing.length === 0) {
   		message.channel.send(message.author.username + ", there is nothing to end!🤡 ");
@@ -100,7 +110,7 @@ client.on('message', message => {
 	    teamblue = [playing[0],playing[2],playing[4],playing[6],playing[8],playing[10],playing[12]];
 	    teamred = [playing[1],playing[3],playing[5],playing[7],playing[9],playing[11],playing[13]];
 	    let playerlist = new Discord.RichEmbed()
-	    	.setAuthor("QWTF PUG - " + currentnumber + '/' + maxplayers + ' Players have joined. Type !pughelp for commands', 'https://avatars1.githubusercontent.com/u/39408414')
+	    	.setAuthor("QWTF PUG - " + currentnumber + '/' + maxplayers + ' Players have joined. !pughelp for commands.', 'https://avatars1.githubusercontent.com/u/39408414')
 			.setColor('#0099ff')
 			// removed to make 1 line as requested by Zel
 			//.setDescription('Type !join to JOIN and !leave to LEAVE the Match and !matchbothelp for more commands.')
@@ -120,6 +130,10 @@ client.on('message', message => {
 				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
 				playerlist.addField(currentnumber + '/' + maxplayers + ' players have joined', 'TIME TO START MATCH!! GET IN SERVER!!');
 				}						
+			if (matchdescript.length > 0) {
+				playerlist.setAuthor("QWTF PUG - " + matchdescript	+ " - " + currentnumber + '/' + maxplayers + ' Players have joined. Type !pughelp for commands', 'https://avatars1.githubusercontent.com/u/39408414')
+
+			}
 	    message.channel.sendEmbed(playerlist)	    
 	    console.log(playing);
 	  } 
@@ -155,13 +169,13 @@ client.on('message', message => {
 			//.setTimestamp()
 			//.setFooter('We need ' + (maxplayers - currentnumber) +' more players!', 'https://avatars1.githubusercontent.com/u/39408414')		
 			if ((currentnumber > 1) && (teams === true)) {
-				playerlist.addField('Team Red', teamblue,true);
+				playerlist.addField('Team Red', teamred,true);
 				}
 			//if(maxplayers - currentnumber === 1) {
 			//	playerlist.setFooter('We need ' + (maxplayers - currentnumber) +' more player!', 'http://gph.is/1Eh63HI')		
 			//}
 			if ((currentnumber >= 1) && (teams === true)) {
-				playerlist.addField('Team Blue', teamred,true);
+				playerlist.addField('Team Blue', teamblue,true);
 				}
 			if ((currentnumber >= maxplayers) && (teams === true)){
 				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
@@ -178,8 +192,13 @@ client.on('message', message => {
     let joinee = message.author.username;
     if (playing.includes(joinee)) {
     	message.channel.send('You have already joined fool!😛' );
-    	return;
-    } else {
+    		return;		
+    }
+	if (playing.length === 0) {
+		message.channel.send(message.author.username + ", there is no match☹, type !startpug if you would like to start a match.");
+		return;
+	} else {
+
 	    playing.push(joinee);
 	    currentnumber = playing.length;
 	    teamblue = [playing[0],playing[2],playing[4],playing[6],playing[8],playing[10],playing[12]];
@@ -194,13 +213,13 @@ client.on('message', message => {
 			//.setTimestamp()
 			//.setFooter('We need ' + (maxplayers - currentnumber) +' more players!', 'https://avatars1.githubusercontent.com/u/39408414')		
 			if ((currentnumber > 1) && (teams === true)) {
-				playerlist.addField('Team Red', teamblue,true);
+				playerlist.addField('Team Red', teamred,true);
 				}
 			//if(maxplayers - currentnumber === 1) {
 			//	playerlist.setFooter('We need ' + (maxplayers - currentnumber) +' more player!', 'http://gph.is/1Eh63HI')		
 			//}
 			if ((currentnumber >= 1) && (teams === true)) {
-				playerlist.addField('Team Blue', teamred,true);
+				playerlist.addField('Team Blue', teamblue,true);
 				}
 			if ((currentnumber >= maxplayers) && (teams === true)){
 				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
@@ -214,6 +233,7 @@ client.on('message', message => {
 	//!startpug
 	if(message.content === `${prefix}startpug`) {
 	let createdstartpug = message.createdTimestamp;
+	let matchdescript = "";
 	console.log(createdstartpug);	
 	let humandate = new Date (createdstartpug);
 	console.log(humandate);
@@ -227,6 +247,7 @@ client.on('message', message => {
 	    currentnumber = playing.length;
 	    teamblue = [playing[0],playing[2],playing[4],playing[6],playing[8],playing[10],playing[12]];
 	    teamred = [playing[1],playing[3],playing[5],playing[7],playing[9],playing[11],playing[13]];
+	    message.channel.send('@here');
 	    let playerlist = new Discord.RichEmbed()
 	    	.setAuthor("QWTF PUG - " + currentnumber + '/' + maxplayers + ' Players have joined. Type !pughelp for commands', 'https://avatars1.githubusercontent.com/u/39408414')
 			.setColor('#0099ff')
@@ -237,13 +258,13 @@ client.on('message', message => {
 			//.setTimestamp()
 			//.setFooter('We need ' + (maxplayers - currentnumber) +' more players!', 'https://avatars1.githubusercontent.com/u/39408414')		
 			if ((currentnumber > 1) && (teams === true)) {
-				playerlist.addField('Team Red', teamblue,true);
+				playerlist.addField('Team Red', teamred,true);
 				}
 			//if(maxplayers - currentnumber === 1) {
 			//	playerlist.setFooter('We need ' + (maxplayers - currentnumber) +' more player!', 'http://gph.is/1Eh63HI')		
 			//}
 			if ((currentnumber >= 1) && (teams === true)) {
-				playerlist.addField('Team Blue', teamred,true);
+				playerlist.addField('Team Blue', teamblue,true);
 				}
 			if ((currentnumber >= maxplayers) && (teams === true)){
 				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
@@ -271,13 +292,13 @@ client.on('message', message => {
 			//.setTimestamp()
 			//.setFooter('We need ' + (maxplayers - currentnumber) +' more players!', 'https://avatars1.githubusercontent.com/u/39408414')		
 			if ((currentnumber > 1) && (teams === true)) {
-				playerlist.addField('Team Red', teamblue,true);
+				playerlist.addField('Team Red', teamred,true);
 				}
 			//if(maxplayers - currentnumber === 1) {
 			//	playerlist.setFooter('We need ' + (maxplayers - currentnumber) +' more player!', 'http://gph.is/1Eh63HI')		
 			//}
 			if ((currentnumber >= 1) && (teams === true)) {
-				playerlist.addField('Team Blue', teamred,true);
+				playerlist.addField('Team Blue', teamblue,true);
 				}
 			if ((currentnumber >= maxplayers) && (teams === true)){
 				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
@@ -290,5 +311,5 @@ client.on('message', message => {
     return;
   } 
 	});
-// Login add your token here
-client.login('NTkwNzg2NjA2MDk3NzYwMjg5.XRSSbQ.OHhRdSKIsOyv2HXqn0eRjp8tyIE');
+// Login add your Discoprd app token here
+client.login('');
