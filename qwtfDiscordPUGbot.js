@@ -22,6 +22,32 @@ client.on('message', message => {
   return;
   }
 
+  //get nick from message author
+  function id() {
+  	let idtest  = message.author.id
+  	console.log("user id:" + message.author.id);
+  	return message.author.id;
+  }
+  function nick() {
+  	let idtest  = message.author.id
+  	console.log("user id:" + message.author.id);
+	//this @'s' user using their id 
+	//message.channel.send('<@'+idtest+">");
+	
+	//testing - this returns nick using id
+	var member = message.guild.member(idtest);
+	console.log(member.nickname);
+	//message.channel.send('<@'+idtest+">")
+	console.log(member);
+	if (member.nickname === null) {
+		return member.user.username;
+	}
+	else {
+
+	return member.nickname;
+		}
+	}
+
   if (message.content.startsWith ('!setmsg')) {
   		matchdescript = message.content.slice(7);
   		console.log(matchdescript);
@@ -31,7 +57,7 @@ client.on('message', message => {
 
   if (message.content === '!endpug') {
   	if (playing.length === 0) {
-  		message.channel.send(message.author.username + ", there is nothing to end!🤡 ");
+  		message.channel.send(nick(message.author.username) + ", there is nothing to end!🤡 ");
   		return;
   	} else {
   playing = [];
@@ -44,9 +70,14 @@ client.on('message', message => {
     message.channel.send('Bent is a moist cunt');
   return;
   }  
-
-    if (message.content === '!teamsize1') {
-    message.channel.send('Bent is a moist cunt');
+  //teamsize 1 is just for testing
+  if (message.content === '!teamsize1') {
+    message.channel.send('Teamsize changed to 1');
+    maxplayers = 1
+  return;
+	}
+  if (message.content === '!teamsize1') {
+    message.channel.send('Teamsize changed to 1');
     maxplayers = 2;
   return;
   }  
@@ -71,17 +102,17 @@ client.on('message', message => {
   return;
   }  
       if (message.content === '!teamsize6') {
-	message.channel.send(message.author.username + "Teamsize changed to 6.");
+	message.channel.send("Teamsize changed to 6.");
     maxplayers = 12;
   return;
   }  
       if (message.content === '!teamsize7') {
-	message.channel.send(message.author.username + "Teamsize changed to 7.");
+	message.channel.send("Teamsize changed to 7.");
     maxplayers = 14;
   return;
   }  
       if (message.content === '!teamsize8') {
-	message.channel.send(message.author.username + "Teamsize changed to 8.");
+	message.channel.send("Teamsize changed to 8.");
     maxplayers = 16;
   return;
   }  
@@ -103,7 +134,7 @@ client.on('message', message => {
   }
     if(message.content === `${prefix}pugstatus`) {
 	if (playing.length === 0) {
-		message.channel.send(message.author.username + ", there is no match☹, type !startpug if you would like to start a match.");
+		message.channel.send(nick(message.author.username) + ", there is no match☹, type !startpug if you would like to start a match.");
 	} else {
 		console.log(playing);
 	    currentnumber = playing.length;
@@ -125,14 +156,9 @@ client.on('message', message => {
 			//}
 			if ((currentnumber >= 1) && (teams === true)) {
 				playerlist.addField('Team Blue', teamblue,true);
-				}
-			if ((currentnumber >= maxplayers) && (teams === true)){
-				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
-				playerlist.addField(currentnumber + '/' + maxplayers + ' players have joined', 'TIME TO START MATCH!! GET IN SERVER!!');
-				}						
+				}					
 			if (matchdescript.length > 0) {
 				playerlist.setAuthor("QWTF PUG - " + matchdescript	+ " - " + currentnumber + '/' + maxplayers + ' Players have joined. Type !pughelp for commands', 'https://avatars1.githubusercontent.com/u/39408414')
-
 			}
 	    message.channel.sendEmbed(playerlist)	    
 	    console.log(playing);
@@ -148,7 +174,7 @@ client.on('message', message => {
 	if (index > -1) {
 	  playing.splice(index, 1);
 	} else {
-		message.channel.send(message.author.username + ' ,you are not in a match and cannot leave something you have not joined. 😂');
+		message.channel.send(nick(message.author.username) + ' ,you are not in a match and cannot leave something you have not joined. 😂');
 		return;
 	}
 	console.log(playing);
@@ -177,10 +203,12 @@ client.on('message', message => {
 			if ((currentnumber >= 1) && (teams === true)) {
 				playerlist.addField('Team Blue', teamblue,true);
 				}
-			if ((currentnumber >= maxplayers) && (teams === true)){
-				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
-				playerlist.addField(currentnumber + '/' + maxplayers + ' players have joined', 'TIME TO START MATCH!! GET IN SERVER!!');
-				}						
+			if ((currentnumber >= maxplayers)){
+				message.channel.send('Meh, we dont need you anyway...');	
+				}	
+			if (matchdescript.length > 0) {
+				playerlist.setAuthor("QWTF PUG - " + matchdescript	+ " - " + currentnumber + '/' + maxplayers + ' Players have joined. Type !pughelp for commands', 'https://avatars1.githubusercontent.com/u/39408414')
+			}						
 	    message.channel.sendEmbed(playerlist)	    
 	    console.log(playing);
 	    return;
@@ -188,20 +216,7 @@ client.on('message', message => {
     return;
   } 
 
-  	//get is from messaage author
-	function nick() {
-		let idtest  = message.author.id
-		console.log("user id:" + message.author.id);
-		//this @'s' user using their id 
-		//message.channel.send('<@'+idtest+">");
-	
-		//testing - this returns nick using id
-		var member = message.guild.member(idtest);
-		console.log(member.nickname);
-		//message.channel.send('<@'+idtest+">")
-		console.log(member);
-		return member.nickname
-	}
+
   //!join
   if(message.content === `${prefix}join`) {
     let joinee = nick(message.author.username);
@@ -210,7 +225,7 @@ client.on('message', message => {
     		return;		
     }
 	if (playing.length === 0) {
-		message.channel.send(message.author.username + ", there is no match☹, type !startpug if you would like to start a match.");
+		message.channel.send(nick(message.author.username) + ", there is no match☹, type !startpug if you would like to start a match.");
 		return;
 	} else {
 
@@ -236,10 +251,17 @@ client.on('message', message => {
 			if ((currentnumber >= 1) && (teams === true)) {
 				playerlist.addField('Team Blue', teamblue,true);
 				}
-			if ((currentnumber >= maxplayers) && (teams === true)){
+			if ((currentnumber >= maxplayers)){
 				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
-				playerlist.addField(currentnumber + '/' + maxplayers + ' players have joined', 'TIME TO START MATCH!! GET IN SERVER!!');
-				}						
+				for (i = 0; i < (currentnumber); i++) {
+					message.channel.send('<@'+id(playing[i])+">");
+				message.channel.send('Time to start match get in server!!');
+				
+			if (matchdescript.length > 0) {
+				playerlist.setAuthor("QWTF PUG - " + matchdescript	+ " - " + currentnumber + '/' + maxplayers + ' Players have joined. Type !pughelp for commands', 'https://avatars1.githubusercontent.com/u/39408414')
+			}
+			}	
+			}						
 	    message.channel.sendEmbed(playerlist)	    
 	    console.log(playing);
 	    return;
@@ -275,7 +297,7 @@ client.on('message', message => {
 	    let playerlist = new Discord.RichEmbed()
 	    	.setAuthor("QWTF PUG - " + currentnumber + '/' + maxplayers + ' Players have joined. Type !pughelp for commands', 'https://avatars1.githubusercontent.com/u/39408414')
 			.setColor('#0099ff')
-			.setDescription(`${joinee} has started the match!`)
+			.setDescription(`${joinee} has started a match!`)
 			// removed to make 1 line as requested by Zel
 			//.setDescription('Type !join to JOIN and !leave to LEAVE the Match and !matchbothelp for more commands.')
 			//.addField(currentnumber + '/' + maxplayers + ' players have joined', ' ------------------------------------------------------------------------------')
@@ -289,11 +311,19 @@ client.on('message', message => {
 			//}
 			if ((currentnumber >= 1) && (teams === true)) {
 				playerlist.addField('Team Blue', teamblue,true);
-				}
-			if ((currentnumber >= maxplayers) && (teams === true)){
-				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
-				playerlist.addField(currentnumber + '/' + maxplayers + ' players have joined', 'TIME TO START MATCH!! GET IN SERVER!!');
-				}						
+
+				//for (i = 0; i < (currentnumber); i++) {
+				//	message.channel.send('<@'+id(playing[0])+">"+' <@'+id(playing[1])+">"+' <@'+id(playing[2])+">"+' <@'+id(playing[3])+">"+' <@'+id(playing[1])+">"+' <@'+id(playing[1])+">"+' <@'+id(playing[1])+">"+' <@'+id(playing[1])+">"+' <@'+id(playing[1])+">"+' <@'+id(playing[1])+">"+' <@'+id(playing[1])+">"+' <@'+id(playing[1])+">"+' <@'+id(playing[1])+">"+' <@'+id(playing[1])+">"+' <@'+id(playing[1])+">"+' <@'+id(playing[1])+">");
+				//	message.channel.send('<@'+id(playing[i])+">")
+				//message.channel.send('Time to start match get in server!!');
+				//}
+
+			}
+	
+			if (matchdescript.length > 0) {
+				playerlist.setAuthor("QWTF PUG - " + matchdescript	+ " - " + currentnumber + '/' + maxplayers + ' Players have joined. Type !pughelp for commands', 'https://avatars1.githubusercontent.com/u/39408414')
+			}		
+									
 	    message.channel.sendEmbed(playerlist)	    
 	    console.log(playing);
 	  } 
@@ -323,11 +353,10 @@ client.on('message', message => {
 			//}
 			if ((currentnumber >= 1) && (teams === true)) {
 				playerlist.addField('Team Blue', teamblue,true);
-				}
-			if ((currentnumber >= maxplayers) && (teams === true)){
-				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
-				playerlist.addField(currentnumber + '/' + maxplayers + ' players have joined', 'TIME TO START MATCH!! GET IN SERVER!!');
-				}						
+				}			
+			if (matchdescript.length > 0) {
+				playerlist.setAuthor("QWTF PUG - " + matchdescript	+ " - " + currentnumber + '/' + maxplayers + ' Players have joined. Type !pughelp for commands', 'https://avatars1.githubusercontent.com/u/39408414')
+			}				
 	    message.channel.sendEmbed(playerlist)	    
 	    console.log(playing);
 	    return;
