@@ -187,9 +187,24 @@ client.on('message', message => {
 	  } 
     return;
   } 
+
+  	//get is from messaage author
+	function nick() {
+		let idtest  = message.author.id
+		console.log("user id:" + message.author.id);
+		//this @'s' user using their id 
+		//message.channel.send('<@'+idtest+">");
+	
+		//testing - this returns nick using id
+		var member = message.guild.member(idtest);
+		console.log(member.nickname);
+		//message.channel.send('<@'+idtest+">")
+		console.log(member);
+		return member.nickname
+	}
   //!join
   if(message.content === `${prefix}join`) {
-    let joinee = message.author.username;
+    let joinee = nick(message.author.username);
     if (playing.includes(joinee)) {
     	message.channel.send('You have already joined fool!😛' );
     		return;		
@@ -235,10 +250,19 @@ client.on('message', message => {
 	let createdstartpug = message.createdTimestamp;
 	let matchdescript = "";
 	console.log(createdstartpug);	
+	
+	//some timestamp stuff not used aatm
 	let humandate = new Date (createdstartpug);
 	console.log(humandate);
-    let joinee = message.author.username;
-    difference = 'test'
+	difference = 'test';
+
+
+    //console.log(member55);
+    //member66 = client.users.get("name", "deamonate").id;
+    //console.log('member66'+member66);
+
+	//
+    let joinee = nick(message.author.username);
     if (playing.includes(joinee)) {
     	message.channel.send('You are already in a match fool!');
     	return;
@@ -311,5 +335,5 @@ client.on('message', message => {
     return;
   } 
 	});
-// Login add your Discoprd app token here
+// Login add your token here
 client.login('');
