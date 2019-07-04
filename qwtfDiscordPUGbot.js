@@ -14,7 +14,7 @@ client.on('ready', () => {
 
 client.on('message', message => {
   if(!message.content.startsWith(prefix)) return;
-  avacommands = ['!startpug: START a game','!join: JOIN current match','!leave: LEAVE current match','!endpug: END/CLEAR existing match','!pugstatus: Check match STATUS' ,'!teamsizeX where X is(1-8): change TEAMSIZE, default is 4','!teams: toggles the display of TEAMS', '!setmsg: add a text field that displays any message i.e time of match.']
+  avacommands = ['!startpug: START a game','!join: JOIN current match','!leave: LEAVE current match','!endpug: END/CLEAR existing match','!pug: Check match STATUS' ,'!teamsizeX where X is(1-8): change TEAMSIZE, default is 4','!teams: toggles the display of TEAMS', '!setmsg: add a text field that displays any message i.e time of match.']
   if (message.content === '!pughelp') {
 	    let commandlist = new Discord.RichEmbed()	
 			.addField('QWTF Matchbot Available Commands',avacommands, true)
@@ -36,9 +36,9 @@ client.on('message', message => {
 	
 	//testing - this returns nick using id
 	var member = message.guild.member(idtest);
-	console.log(member.nickname);
+	//console.log(member.nickname);
 	//message.channel.send('<@'+idtest+">")
-	console.log(member);
+	//console.log(member);
 	if (member.nickname === null) {
 		return member.user.username;
 	}
@@ -58,6 +58,7 @@ client.on('message', message => {
   if (message.content === '!endpug') {
   	if (playing.length === 0) {
   		message.channel.send(nick(message.author.username) + ", there is nothing to end!🤡 ");
+  		let matchdescript = "";
   		return;
   	} else {
   playing = [];
@@ -71,11 +72,7 @@ client.on('message', message => {
   return;
   }  
   //teamsize 1 is just for testing
-  if (message.content === '!teamsize1') {
-    message.channel.send('Teamsize changed to 1');
-    maxplayers = 1
-  return;
-	}
+
   if (message.content === '!teamsize1') {
     message.channel.send('Teamsize changed to 1');
     maxplayers = 2;
@@ -168,7 +165,7 @@ client.on('message', message => {
   //!leave
   if(message.content === `${prefix}leave`) {
 
-    let joinee = message.author.username;
+    let joinee = nick(message.author.username);
 	var index = playing.indexOf(joinee);
 	console.log('index:' + index)
 	if (index > -1) {
@@ -251,18 +248,24 @@ client.on('message', message => {
 			if ((currentnumber >= 1) && (teams === true)) {
 				playerlist.addField('Team Blue', teamblue,true);
 				}
-			if ((currentnumber >= maxplayers)){
-				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
-				for (i = 0; i < (currentnumber); i++) {
-					message.channel.send('<@'+id(playing[i])+">");
-				message.channel.send('Time to start match get in server!!');
-				
 			if (matchdescript.length > 0) {
 				playerlist.setAuthor("QWTF PUG - " + matchdescript	+ " - " + currentnumber + '/' + maxplayers + ' Players have joined. Type !pughelp for commands', 'https://avatars1.githubusercontent.com/u/39408414')
+			
+				}		
+			if ((currentnumber >= maxplayers)){
+				playerlist.setImage('https://media.giphy.com/media/9wQectHXbY4y4/giphy.gif')
+				for (i = 0; i < (currentnumber ); i++) {
+					console.log(i);
+					console.log(playing[i]);
+
+					//message.channel.send('<@'+id(playing[i])+">");
+				message.channel.send('Time to start match get in server!!');
 			}
-			}	
+				
+
+			
 			}						
-	    message.channel.sendEmbed(playerlist)	    
+  		message.channel.sendEmbed(playerlist);
 	    console.log(playing);
 	    return;
 	  } 
@@ -270,13 +273,12 @@ client.on('message', message => {
 	//!startpug
 	if(message.content === `${prefix}startpug`) {
 	let createdstartpug = message.createdTimestamp;
-	let matchdescript = "";
 	console.log(createdstartpug);	
 	
 	//some timestamp stuff not used aatm
 	let humandate = new Date (createdstartpug);
 	console.log(humandate);
-	difference = 'test';
+	let matchdescript = ""
 
 
     //console.log(member55);
@@ -319,10 +321,10 @@ client.on('message', message => {
 				//}
 
 			}
-	
 			if (matchdescript.length > 0) {
 				playerlist.setAuthor("QWTF PUG - " + matchdescript	+ " - " + currentnumber + '/' + maxplayers + ' Players have joined. Type !pughelp for commands', 'https://avatars1.githubusercontent.com/u/39408414')
-			}		
+			}	
+		
 									
 	    message.channel.sendEmbed(playerlist)	    
 	    console.log(playing);
