@@ -274,7 +274,7 @@ client.on('message', message => {
 	if(message.content === `${prefix}startpug`) {
 	let createdstartpug = message.createdTimestamp;
 	console.log(createdstartpug);	
-	
+	let maxplayers = 8;
 	//some timestamp stuff not used aatm
 	let humandate = new Date (createdstartpug);
 	console.log(humandate);
