@@ -367,4 +367,4 @@ client.on('message', message => {
   } 
 	});
 // Login add your token here
-client.login('');
+client.login('NTkwNzg2NjA2MDk3NzYwMjg5.XRZfMg.C6naTtPKaOvIJOIlLD8Q6xJDgT8');
